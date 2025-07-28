@@ -1,0 +1,221 @@
+{
+    "recipients": [
+        {
+            "id": "1",
+            "name": "himanshu ",
+            "phone": "7770045132"
+        }
+    ],
+    "message_templates": [
+        {
+            "id": "1",
+            "name": "whatever",
+            "content": "this  is me"
+        }
+    ],
+    "scheduled_messages": [
+        {
+            "id": "1",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "00:08",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "2",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "00:13",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "3",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "00:17",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "4",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "00:25",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "5",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "00:40",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "6",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "00:55",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "7",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "11:15",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "8",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "01:38",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "9",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "09:48",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "10",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "09:55",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "11",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "10:00",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "12",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "10:28",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "13",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "10:32",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "14",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "10:36",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "15",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "10:38",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "16",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "10:44",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "17",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "11:01",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "18",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "11:13",
+            "active": true,
+            "date": "2025-06-30"
+        },
+        {
+            "id": "19",
+            "recipient_id": "1",
+            "template_id": "1",
+            "type": "one_time",
+            "time": "11:19",
+            "active": true,
+            "date": "2025-06-30"
+        }
+    ],
+    "message_history": [
+        {
+            "recipient": "himanshu ",
+            "message": "this  is me",
+            "status": "error",
+            "timestamp": "2025-06-30 00:13:00"
+        },
+        {
+            "recipient": "himanshu ",
+            "message": "this  is me",
+            "status": "error",
+            "timestamp": "2025-06-30 00:13:00"
+        },
+        {
+            "recipient": "himanshu ",
+            "message": "this  is me",
+            "status": "error",
+            "timestamp": "2025-06-30 00:25:00"
+        },
+        {
+            "recipient": "himanshu ",
+            "message": "this  is me",
+            "status": "error",
+            "timestamp": "2025-06-30 10:00:02"
+        }
+    ],
+    "stats": {
+        "total": 4,
+        "successful": 0,
+        "failed": 4,
+        "pending": 0
+    }
+}

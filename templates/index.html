@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Automation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1a1a1a;
+            --darker-bg: #141414;
+            --card-bg: #242424;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #25D366;
+            --danger-color: #dc3545;
+            --border-color: #333333;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: var(--darker-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+        }
+
+        .card-title {
+            color: var(--text-primary);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-control, .form-select {
+            background-color: var(--darker-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: var(--darker-bg);
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 0.2rem rgba(37, 211, 102, 0.25);
+        }
+
+        .form-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .form-text {
+            color: var(--text-secondary);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #128C7E;
+            border-color: #128C7E;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .status-active {
+            background-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .status-inactive {
+            background-color: var(--danger-color);
+            box-shadow: 0 0 10px var(--danger-color);
+        }
+
+        .schedule-options {
+            display: none;
+            background-color: var(--darker-bg);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .schedule-options.active {
+            display: block;
+        }
+
+        .list-group-item {
+            background-color: var(--darker-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .badge {
+            padding: 8px 12px;
+            font-weight: 500;
+        }
+
+        .message-history {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .message-item {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: var(--darker-bg);
+        }
+
+        .message-item.success {
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .message-item.error {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .message-item.pending {
+            border-left: 4px solid #ffc107;
+        }
+
+        .message-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--text-secondary);
+            border: none;
+            padding: 10px 20px;
+            margin-right: 5px;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--accent-color);
+            background-color: transparent;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stats-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-check-label {
+            color: var(--text-primary);
+        }
+
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+
+        .list-group-item small {
+            color: var(--text-secondary);
+        }
+
+        .list-group-item p {
+            color: var(--text-secondary);
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--text-secondary);
+            border: none;
+            padding: 10px 20px;
+            margin-right: 5px;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--accent-color);
+            background-color: transparent;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        h6 {
+            color: var(--text-primary);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .form-check-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 211, 102, 0.25);
+        }
+
+        .form-select option {
+            background-color: var(--darker-bg);
+            color: var(--text-primary);
+        }
+
+        .form-select option:checked {
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .form-select option:hover {
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .message-item h6 {
+            color: var(--text-primary);
+        }
+
+        .message-item p {
+            color: var(--text-secondary);
+        }
+
+        .message-meta span {
+            color: var(--text-secondary);
+        }
+
+        .badge {
+            color: var(--text-primary);
+        }
+
+        .btn-outline-primary {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline-danger {
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .btn-outline-danger:hover {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+            color: var(--text-primary);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-select:invalid {
+            color: var(--text-secondary);
+        }
+
+        .form-select option[value=""] {
+            color: var(--text-secondary);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .form-control[type="datetime-local"],
+        .form-control[type="date"],
+        .form-control[type="time"] {
+            color-scheme: dark;
+        }
+
+        .form-control[type="datetime-local"]::-webkit-calendar-picker-indicator,
+        .form-control[type="date"]::-webkit-calendar-picker-indicator,
+        .form-control[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <h1 class="mb-4">
+            <i class="fab fa-whatsapp text-success me-2"></i>
+            WhatsApp Automation System
+        </h1>
+
+        <!-- Stats Row -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-number">{{ stats.total_messages }}</div>
+                    <div class="stats-label">Total Messages</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-number">{{ stats.successful }}</div>
+                    <div class="stats-label">Successful</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-number">{{ stats.failed }}</div>
+                    <div class="stats-label">Failed</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card">
+                    <div class="stats-number">{{ stats.pending }}</div>
+                    <div class="stats-label">Pending</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Tabs -->
+        <ul class="nav nav-tabs mb-4" id="mainTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="messages-tab" data-bs-toggle="tab" href="#messages" role="tab">
+                    <i class="fas fa-paper-plane me-2"></i>Messages
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="schedule-tab" data-bs-toggle="tab" href="#schedule" role="tab">
+                    <i class="fas fa-clock me-2"></i>Schedule
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contacts-tab" data-bs-toggle="tab" href="#contacts" role="tab">
+                    <i class="fas fa-address-book me-2"></i>Contacts
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="templates-tab" data-bs-toggle="tab" href="#templates" role="tab">
+                    <i class="fas fa-file-alt me-2"></i>Templates
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="mainTabsContent">
+            <!-- Messages Tab -->
+            <div class="tab-pane fade show active" id="messages" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Bot Control Card -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    Bot Control
+                                    <span class="status-indicator" id="botStatus"></span>
+                                    <span id="botStatusText">Bot is stopped</span>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <button id="startBot" class="btn btn-success me-2">
+                                    <i class="fas fa-play me-2"></i>Start Bot
+                                </button>
+                                <button id="stopBot" class="btn btn-danger">
+                                    <i class="fas fa-stop me-2"></i>Stop Bot
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Send Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-bolt me-2"></i>Quick Send Message
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="quickSendForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" name="phone" required 
+                                               placeholder="Enter phone number (e.g., 201234567890)">
+                                        <div class="form-text">Include country code (e.g., 20 for Egypt)</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Message</label>
+                                        <textarea class="form-control" name="message" rows="3" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Now
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Message History Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <i class="fas fa-history me-2"></i>Message History
+                                </h5>
+                            </div>
+                            <div class="card-body message-history">
+                                {% for message in message_history %}
+                                <div class="message-item {{ message.status }}">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h6 class="mb-1">{{ message.recipient }}</h6>
+                                            <p class="mb-1">{{ message.content }}</p>
+                                            <div class="message-meta">
+                                                <span><i class="far fa-clock me-1"></i>{{ message.timestamp }}</span>
+                                                <span class="ms-3"><i class="fas fa-phone me-1"></i>{{ message.phone }}</span>
+                                            </div>
+                                        </div>
+                                        <span class="badge bg-{{ 'success' if message.status == 'success' else 'danger' if message.status == 'error' else 'warning' }}">
+                                            {{ message.status }}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Tab -->
+            <div class="tab-pane fade" id="schedule" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-calendar-alt me-2"></i>Schedule Messages
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary btn-schedule" data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                            <i class="fas fa-calendar-plus me-2"></i>Schedule Message
+                        </button>
+                        
+                        <div class="mt-4">
+                            <h6>Scheduled Messages</h6>
+                            <div class="list-group" id="scheduledList">
+                                {% for schedule in scheduled_messages %}
+                                {% set recipient = recipients|selectattr('id', 'equalto', schedule.recipient_id)|first %}
+                                {% set template = templates|selectattr('id', 'equalto', schedule.template_id)|first %}
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">{{ recipient.name if recipient else 'Unknown Recipient' }}</h6>
+                                            <small>{{ template.name if template else 'Unknown Template' }}</small>
+                                            <p class="mb-1">
+                                                {% if schedule.type == 'one_time' %}
+                                                <i class="far fa-calendar me-1"></i>One time: {{ schedule.time }}
+                                                {% elif schedule.type == 'daily' %}
+                                                <i class="fas fa-redo me-1"></i>Daily at {{ schedule.time }}
+                                                {% elif schedule.type == 'weekly' %}
+                                                <i class="fas fa-calendar-week me-1"></i>Weekly on {{ schedule.day }} at {{ schedule.time }}
+                                                {% elif schedule.type == 'monthly' %}
+                                                <i class="fas fa-calendar-alt me-1"></i>Monthly on day {{ schedule.day }} at {{ schedule.time }}
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                        <span class="badge bg-{{ 'success' if schedule.active else 'secondary' }}">
+                                            {{ 'Active' if schedule.active else 'Inactive' }}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacts Tab -->
+            <div class="tab-pane fade" id="contacts" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-users me-2"></i>Recipients
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="addRecipientForm">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" name="phone" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Notes</label>
+                                        <input type="text" class="form-control" name="notes">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-user-plus me-2"></i>Add Recipient
+                            </button>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <h6>Saved Recipients</h6>
+                            <div class="list-group" id="recipientsList">
+                                {% for recipient in recipients %}
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">{{ recipient.name }}</h6>
+                                            <small><i class="fas fa-phone me-1"></i>{{ recipient.phone }}</small>
+                                            {% if recipient.notes %}
+                                            <p class="mb-1 text-muted"><i class="fas fa-sticky-note me-1"></i>{{ recipient.notes }}</p>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-primary me-2">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Templates Tab -->
+            <div class="tab-pane fade" id="templates" role="tabpanel">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-file-alt me-2"></i>Message Templates
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="addTemplateForm">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Template Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label class="form-label">Message Content</label>
+                                        <textarea class="form-control" name="content" rows="3" required></textarea>
+                                        <div class="form-text">Use {name} to include recipient's name</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Add Template
+                            </button>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <h6>Saved Templates</h6>
+                            <div class="list-group" id="templatesList">
+                                {% for template in templates %}
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-1">{{ template.name }}</h6>
+                                            <p class="mb-1">{{ template.content }}</p>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-primary me-2">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Message Modal -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Schedule Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="scheduleForm">
+                        <div class="mb-3">
+                            <label class="form-label">Recipient</label>
+                            <select class="form-select" name="recipient" required>
+                                <option value="">Select recipient</option>
+                                {% for recipient in recipients %}
+                                <option value="{{ recipient.id }}">{{ recipient.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Message Template</label>
+                            <select class="form-select" name="template" required>
+                                <option value="">Select template</option>
+                                {% for template in templates %}
+                                <option value="{{ template.id }}">{{ template.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Schedule Type</label>
+                            <select class="form-select" name="schedule_type" required>
+                                <option value="">Select schedule type</option>
+                                <option value="one_time">One Time</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Schedule Options -->
+                        <div class="schedule-options" id="oneTimeOptions">
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" name="date" min="{{ today }}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" name="time">
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-options" id="dailyOptions">
+                            <div class="mb-3">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" name="time">
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-options" id="weeklyOptions">
+                            <div class="mb-3">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" name="time">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Days of Week</label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="days[]" value="monday">
+                                            <label class="form-check-label">Monday</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="days[]" value="tuesday">
+                                            <label class="form-check-label">Tuesday</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="days[]" value="wednesday">
+                                            <label class="form-check-label">Wednesday</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="days[]" value="thursday">
+                                            <label class="form-check-label">Thursday</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="days[]" value="friday">
+                                            <label class="form-check-label">Friday</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="days[]" value="saturday">
+                                            <label class="form-check-label">Saturday</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="days[]" value="sunday">
+                                            <label class="form-check-label">Sunday</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-options" id="monthlyOptions">
+                            <div class="mb-3">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" name="time">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Day of Month</label>
+                                <input type="number" class="form-control" name="day_of_month" min="1" max="31">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmSchedule">Schedule Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize the schedule modal
+            const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+            
+            // Bot Control
+            $('#startBot').click(function() {
+                $.post('/start_bot', function(response) {
+                    if (response.status === 'success') {
+                        $('#botStatus').removeClass('status-inactive').addClass('status-active');
+                        $('#botStatusText').text('Bot is running');
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                });
+            });
+
+            $('#stopBot').click(function() {
+                $.post('/stop_bot', function(response) {
+                    if (response.status === 'success') {
+                        $('#botStatus').removeClass('status-active').addClass('status-inactive');
+                        $('#botStatusText').text('Bot is stopped');
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                });
+            });
+
+            // Quick Send
+            $('#quickSendForm').submit(function(e) {
+                e.preventDefault();
+                $.post('/send_message', $(this).serialize(), function(response) {
+                    if (response.status === 'success') {
+                        alert('Message sent successfully!');
+                        $('#quickSendForm')[0].reset();
+                        location.reload(); // Refresh to update message history
+                    } else {
+                        alert('Error: ' + response.message);
+                    }
+                });
+            });
+
+            // Add Recipient
+            $('#addRecipientForm').submit(function(e) {
+                e.preventDefault();
+                const $form = $(this);
+                const $submitBtn = $form.find('button[type="submit"]');
+                const originalBtnText = $submitBtn.html();
+                
+                // Show loading state
+                $submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...');
+                
+                $.ajax({
+                    url: '/add_recipient',
+                    type: 'POST',
+                    data: $form.serialize(),
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Show success message
+                            const $alert = $(`
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    ${response.message || 'Recipient added successfully!'}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
+                            $form.before($alert);
+                            
+                            // Reset form
+                            $form[0].reset();
+                            
+                            // Refresh the recipients list after a short delay
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            // Show error message
+                            const $alert = $(`
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    ${response.message || 'Failed to add recipient. Please try again.'}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
+                            $form.before($alert);
+                        }
+                    },
+                    error: function(xhr) {
+                        let errorMsg = 'An error occurred while adding the recipient.';
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.message) {
+                                errorMsg = response.message;
+                            }
+                        } catch (e) {
+                            console.error('Error parsing error response:', e);
+                        }
+                        
+                        const $alert = $(`
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                ${errorMsg}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `);
+                        $form.before($alert);
+                    },
+                    complete: function() {
+                        // Restore button state
+                        $submitBtn.prop('disabled', false).html(originalBtnText);
+                        
+                        // Auto-dismiss alerts after 5 seconds
+                        setTimeout(() => {
+                            $('.alert').alert('close');
+                        }, 5000);
+                    }
+                });
+            });
+
+            // Add Template
+            // Add Template
+            $('#addTemplateForm').submit(function(e) {
+                e.preventDefault();
+                const $form = $(this);
+                const $submitBtn = $form.find('button[type="submit"]');
+                const originalBtnText = $submitBtn.html();
+                
+                // Show loading state
+                $submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...');
+                
+                $.ajax({
+                    url: '/add_template',
+                    type: 'POST',
+                    data: $form.serialize(),
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Show success message
+                            const $alert = $(`
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    ${response.message || 'Template added successfully!'}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
+                            $form.before($alert);
+                            
+                            // Reset form
+                            $form[0].reset();
+                            
+                            // Refresh the templates list after a short delay
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            // Show error message
+                            const $alert = $(`
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    ${response.message || 'Failed to add template. Please try again.'}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            `);
+                            $form.before($alert);
+                        }
+                    },
+                    error: function(xhr) {
+                        let errorMsg = 'An error occurred while adding the template.';
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.message) {
+                                errorMsg = response.message;
+                            }
+                        } catch (e) {
+                            console.error('Error parsing error response:', e);
+                        }
+                        
+                        const $alert = $(`
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                ${errorMsg}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `);
+                        $form.before($alert);
+                    },
+                    complete: function() {
+                        // Restore button state
+                        $submitBtn.prop('disabled', false).html(originalBtnText);
+                        
+                        // Auto-dismiss alerts after 5 seconds
+                        setTimeout(() => {
+                            $('.alert').alert('close');
+                        }, 5000);
+                    }
+                });
+            });
+
+            // Schedule Message
+            $('select[name="schedule_type"]').on('change', function() {
+                $('.schedule-options').hide();
+                const selectedType = $(this).val();
+                if (selectedType === 'one_time') {
+                    $('#oneTimeOptions').fadeIn();
+                } else if (selectedType === 'daily') {
+                    $('#dailyOptions').fadeIn();
+                } else if (selectedType === 'weekly') {
+                    $('#weeklyOptions').fadeIn();
+                } else if (selectedType === 'monthly') {
+                    $('#monthlyOptions').fadeIn();
+                }
+            });
+
+            // Show schedule modal when clicking the schedule button
+            $('.btn-schedule').on('click', function(e) {
+                e.preventDefault();
+                // Reset form and hide all schedule options
+                $('#scheduleForm')[0].reset();
+                $('.schedule-options').hide();
+                scheduleModal.show();
+            });
+
+            // Handle schedule confirmation
+            $('#confirmSchedule').on('click', function() {
+                const $form = $('#scheduleForm');
+                const $submitBtn = $(this);
+                const originalBtnText = $submitBtn.html();
+                
+                // Show loading state
+                $submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Scheduling...');
+                
+                // Clear previous alerts
+                $('.alert-dismissible').alert('close');
+                
+                const scheduleType = $form.find('select[name="schedule_type"]').val();
+                const recipient = $form.find('select[name="recipient"]').val();
+                const template = $form.find('select[name="template"]').val();
+
+                // Validate required fields
+                if (!scheduleType || !recipient || !template) {
+                    showAlert('Please fill in all required fields', 'danger');
+                    $submitBtn.prop('disabled', false).html(originalBtnText);
+                    return;
+                }
+
+                // Create FormData object
+                const formData = new FormData();
+                formData.append('schedule_type', scheduleType);
+                formData.append('recipient', recipient);
+                formData.append('template', template);
+
+                // Add schedule type specific fields
+                let isValid = true;
+                
+                if (scheduleType === 'one_time') {
+                    const date = $form.find('#oneTimeOptions input[name="date"]').val();
+                    const time = $form.find('#oneTimeOptions input[name="time"]').val();
+                    if (!date || !time) {
+                        showAlert('Please select both date and time for one-time schedule', 'danger');
+                        isValid = false;
+                    } else {
+                        formData.append('date', date);
+                        formData.append('time', time);
+                    }
+                }
+                else if (scheduleType === 'daily') {
+                    const time = $form.find('#dailyOptions input[name="time"]').val();
+                    if (!time) {
+                        showAlert('Please select time for daily schedule', 'danger');
+                        isValid = false;
+                    } else {
+                        formData.append('time', time);
+                    }
+                }
+                else if (scheduleType === 'weekly') {
+                    const time = $form.find('#weeklyOptions input[name="time"]').val();
+                    const days = [];
+                    $form.find('#weeklyOptions input[name="days[]"]:checked').each(function() {
+                        days.push($(this).val());
+                    });
+                    if (!time || days.length === 0) {
+                        showAlert('Please select time and at least one day for weekly schedule', 'danger');
+                        isValid = false;
+                    } else {
+                        formData.append('time', time);
+                        days.forEach(day => formData.append('days[]', day));
+                    }
+                }
+                else if (scheduleType === 'monthly') {
+                    const time = $form.find('#monthlyOptions input[name="time"]').val();
+                    const dayOfMonth = $form.find('#monthlyOptions input[name="day_of_month"]').val();
+                    if (!time || !dayOfMonth) {
+                        showAlert('Please select time and day of month for monthly schedule', 'danger');
+                        isValid = false;
+                    } else {
+                        formData.append('time', time);
+                        formData.append('day_of_month', dayOfMonth);
+                    }
+                }
+                
+                if (!isValid) {
+                    $submitBtn.prop('disabled', false).html(originalBtnText);
+                    return;
+                }
+
+                // Send the schedule request
+                $.ajax({
+                    url: '/schedule_message',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            showAlert(response.message || 'Message scheduled successfully!', 'success');
+                            // Close modal and reload after a short delay
+                            setTimeout(() => {
+                                scheduleModal.hide();
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            showAlert(response.message || 'Failed to schedule message', 'danger');
+                            $submitBtn.prop('disabled', false).html(originalBtnText);
+                        }
+                    },
+                    error: function(xhr) {
+                        let errorMsg = 'An error occurred while scheduling the message.';
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.message) {
+                                errorMsg = response.message;
+                            }
+                        } catch (e) {
+                            console.error('Error parsing error response:', e);
+                        }
+                        showAlert(errorMsg, 'danger');
+                        $submitBtn.prop('disabled', false).html(originalBtnText);
+                    }
+                });
+                
+                // Helper function to show alerts
+                function showAlert(message, type) {
+                    const $alert = $(`
+                        <div class="alert alert-${type} alert-dismissible fade show mt-3" role="alert">
+                            ${message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `);
+                    $form.before($alert);
+                    
+                    // Auto-dismiss after 5 seconds
+                    setTimeout(() => {
+                        $alert.alert('close');
+                    }, 5000);
+                }
+            });
+
+            // Auto-scroll message history to bottom
+            $('.message-history').scrollTop($('.message-history')[0].scrollHeight);
+        });
+    </script>
+</body>
+</html> 
